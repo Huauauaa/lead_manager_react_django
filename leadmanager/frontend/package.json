@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.0.0",
   "scripts": {
+    "start": "npm run dev",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
@@ -10,6 +11,7 @@
     "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.1.0",
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
+    "axios": "^0.24.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "styled-components": "^5.3.3"

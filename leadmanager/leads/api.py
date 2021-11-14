@@ -2,6 +2,7 @@ from leads.models import Lead
 from rest_framework import viewsets, permissions
 from .serializers import LeadSerializer
 
+
 class LeadViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.AllowAny,
@@ -9,4 +10,4 @@ class LeadViewSet(viewsets.ModelViewSet):
     serializer_class = LeadSerializer
 
     def get_queryset(self):
-        return Lead.objects.all()
+        return Lead.objects.order_by('-id')
