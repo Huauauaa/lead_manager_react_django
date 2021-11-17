@@ -22,7 +22,7 @@ function App() {
     try {
       setLoading(true);
       const data = await getLeads();
-      setLeads(data);
+      setLeads(data || []);
     } finally {
       setLoading(false);
     }

@@ -1,9 +1,10 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const instance = axios.create({
   baseURL: '/api',
   timeout: 1000,
-  headers: { 'X-Custom-Header': 'foobar' },
+  headers: { 'X-CSRFToken': Cookies.get('csrftoken') },
 });
 
 instance.interceptors.response.use(

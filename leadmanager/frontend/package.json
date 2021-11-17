@@ -12,6 +12,7 @@
     "@mui/material": "^5.1.0",
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "axios": "^0.24.0",
+    "js-cookie": "^3.0.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "styled-components": "^5.3.3"

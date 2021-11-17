@@ -5,9 +5,12 @@ from .serializers import LeadSerializer
 
 class LeadViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.AllowAny,
+        permissions.IsAuthenticated,
     ]
     serializer_class = LeadSerializer
 
     def get_queryset(self):
-        return Lead.objects.order_by('-id')
+        return self.request.user.leads.order_by('-id')
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
