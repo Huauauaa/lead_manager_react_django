@@ -18,11 +18,10 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({});
   const [userInfo, setUserInfo] = useState(null);
-  const [token, setToken] = useState('');
 
   useEffect(() => {
     fetchCurrentUser();
-  }, [token]);
+  }, []);
 
   const fetchCurrentUser = async () => {
     try {
@@ -34,7 +33,7 @@ function App() {
   };
 
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo, token, setToken }}>
+    <UserContext.Provider value={{ userInfo, setUserInfo }}>
       <MessageContext.Provider value={{ message, setMessage }}>
         <LoadingContext.Provider value={{ loading, setLoading }}>
           <div className="App">

@@ -5,7 +5,5 @@ export const login = (payload) => {
 };
 
 export const getCurrentUser = () => {
-  return http.get('/auth/user', {
-    headers: { Authorization: `Token ${localStorage.getItem('token')}` },
-  });
+  return http.get('/auth/user');
 };

@@ -1,19 +1,98 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import UserContext from '../contexts/UserContext';
 
 function Header() {
-  const { token, userInfo, setToken } = useContext(UserContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  const menuId = 'primary-search-account-menu';
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem>{userInfo?.username}</MenuItem>
+      <MenuItem
+        onClick={() => {
+          sessionStorage.removeItem('token');
+          setUserInfo(null);
+        }}
+      >
+        Sign Out
+      </MenuItem>
+    </Menu>
+  );
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>{userInfo?.username}</MenuItem>
+      <MenuItem
+        onClick={() => {
+          sessionStorage.removeItem('token');
+          setUserInfo(null);
+        }}
+      >
+        Sign Out
+      </MenuItem>
+    </Menu>
+  );
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -31,7 +110,7 @@ function Header() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             <StyledLink to="/">Leads Manager</StyledLink>
           </Typography>
@@ -44,30 +123,45 @@ function Header() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          <Box sx={{ flexGrow: 1 }} />
+
           {userInfo ? (
             <>
-              <Typography variant="h6" noWrap component="div">
-                {userInfo.username}
-              </Typography>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                onClick={() => {
-                  setToken(null);
-                  localStorage.removeItem('token');
-                }}
-              >
-                Sign Out
-              </Typography>
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Box>
+              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show more"
+                  aria-controls={mobileMenuId}
+                  aria-haspopup="true"
+                  onClick={handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </Box>
             </>
           ) : (
-            <Typography variant="h6" noWrap component="div">
-              <StyledLink to="/sign-in"> Sign In</StyledLink>
-            </Typography>
+            <StyledLink to="/sign-in">
+              <Button color="inherit">Login</Button>
+            </StyledLink>
           )}
         </Toolbar>
       </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
     </Box>
   );
 }

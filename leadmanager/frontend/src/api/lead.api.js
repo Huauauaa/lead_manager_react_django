@@ -1,9 +1,7 @@
 import http from './index';
 
 export const getLeads = () => {
-  return http.get('/leads/', {
-    headers: { Authorization: `Token ${localStorage.getItem('token')}` },
-  });
+  return http.get('/leads/');
 };
 
 export const createLead = (payload) => {
@@ -15,5 +13,5 @@ export const updateLead = (id, payload) => {
 };
 
 export const deleteLead = (id) => {
-  return http.delete(`/leads/${id}`);
+  return http.delete(`/leads/${id}/`);
 };

@@ -1,10 +1,22 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const instance = axios.create({
   baseURL: '/api',
   timeout: 1000,
 });
+
+instance.interceptors.request.use(
+  function (config) {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Token ${token}`;
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
 
 instance.interceptors.response.use(
   (response) => {
