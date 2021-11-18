@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { styled, alpha } from '@mui/material/styles';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,7 +10,10 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
+import UserContext from '../contexts/UserContext';
+
 function Header() {
+  const { token, userInfo, setToken } = useContext(UserContext);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -29,7 +33,7 @@ function Header() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            Leads Manager
+            <StyledLink to="/">Leads Manager</StyledLink>
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -40,11 +44,38 @@ function Header() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          {userInfo ? (
+            <>
+              <Typography variant="h6" noWrap component="div">
+                {userInfo.username}
+              </Typography>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                onClick={() => {
+                  setToken(null);
+                  localStorage.removeItem('token');
+                }}
+              >
+                Sign Out
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="h6" noWrap component="div">
+              <StyledLink to="/sign-in"> Sign In</StyledLink>
+            </Typography>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #fff;
+`;
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

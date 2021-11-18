@@ -1,7 +1,9 @@
 import http from './index';
 
 export const getLeads = () => {
-  return http.get('/leads/');
+  return http.get('/leads/', {
+    headers: { Authorization: `Token ${localStorage.getItem('token')}` },
+  });
 };
 
 export const createLead = (payload) => {

@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 const instance = axios.create({
   baseURL: '/api',
   timeout: 1000,
-  headers: { 'X-CSRFToken': Cookies.get('csrftoken') },
 });
 
 instance.interceptors.response.use(
@@ -20,9 +19,8 @@ instance.interceptors.response.use(
       case 400:
         return Promise.reject(data);
       default:
-        break;
+        return Promise.reject(error.response);
     }
-    // return Promise.reject(error.response);
   },
 );
 
