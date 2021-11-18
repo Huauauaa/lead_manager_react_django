@@ -83,3 +83,9 @@ def index(request):
 
 `yarn build`
 `python manage.py runserver`
+
+## QUESTION
+
+### Could not import 'knox.auth.TokenAuthentication'
+
+use django 3

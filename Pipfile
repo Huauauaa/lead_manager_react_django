@@ -4,9 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
+psycopg2 = "*"
+django = "==3.2.9"
 
 [dev-packages]
 black = "*"
