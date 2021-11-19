@@ -12,6 +12,7 @@ import UserContext from './contexts/UserContext';
 import LeadView from './views/LeadView';
 import SignIn from './views/SignIn';
 import { getCurrentUser } from './api/account.api';
+import SignUp from './views/SignUp';
 
 function App() {
   const navigator = useNavigate();
@@ -28,7 +29,7 @@ function App() {
       const response = await getCurrentUser();
       setUserInfo(response);
     } catch (error) {
-      navigator('sign-in');
+      // navigator('sign-in');
     }
   };
 
@@ -41,6 +42,7 @@ function App() {
             <Routes>
               <Route path="/" element={<LeadView />} />
               <Route path="sign-in" element={<SignIn />} />
+              <Route path="sign-up" element={<SignUp />} />
             </Routes>
           </div>
           <Backdrop open={loading}>

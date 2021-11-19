@@ -47,7 +47,6 @@ function Header() {
         horizontal: 'right',
       }}
       id={menuId}
-      keepMounted
       transformOrigin={{
         vertical: 'top',
         horizontal: 'right',
@@ -60,6 +59,8 @@ function Header() {
         onClick={() => {
           sessionStorage.removeItem('token');
           setUserInfo(null);
+          setAnchorEl(null);
+          location.reload();
         }}
       >
         Sign Out
